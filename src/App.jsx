@@ -4,10 +4,10 @@ import Words from "./Words";
 
 const App = () => {
   return (
-    <div>
-      <h1>Typing Game</h1>
+    <div className="">
+      <h1 className="mt-5 mb-10 ml-5">Typing Game</h1>
       <Words
-        size="100"
+        size="50"
       />
     </div>
   );

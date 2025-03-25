@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+.letter {
+	color: grey;
+}
+
+.letter.wrong {
+	color: red;
+}
+
+.letter.right {
+	color: black;
+}
+
+.curs {
+	background-color: red;
+	width: 2px;
+	height: 20px;
+}
