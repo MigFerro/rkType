@@ -1,19 +1,39 @@
 @import "tailwindcss";
 
 .letter {
-	color: grey;
+  color: grey;
 }
 
 .letter.wrong {
-	color: red;
+  color: red;
 }
 
 .letter.right {
-	color: black;
+  color: black;
 }
 
 .curs {
-	background-color: red;
-	width: 2px;
-	height: 20px;
+  background-color: red;
+  width: 2px;
+  height: 20px;
+}
+
+button {
+  background-color: black;
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+}
+button.disabled {
+  background-color: grey;
+}
+
+button.disabled:hover {
+  background-color: grey;
+  cursor: auto;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: orange;
 }
