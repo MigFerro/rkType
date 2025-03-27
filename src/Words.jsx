@@ -1,49 +1,4 @@
-//const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-
-const Words = ({ words, currentWordIndex, typedWord }) => {
-  //const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  //const [currentWord, setCurrentWord] = useState("");
-  //const [words, setWords] = useState([]);
-  //
-  //useEffect(() => {
-  //  const getWords = async () => {
-  //    const res = await fetch("/words");
-  //    const words = await res.json();
-  //    setWords(words.words);
-  //  };
-  //
-  //  getWords();
-  //}, []);
-  //
-  //useEffect(() => {
-  //  const handleTyping = (event) => {
-  //    if (event.key === "Backspace") {
-  //      if (currentWord !== "") {
-  //        setCurrentWord((old) => old.slice(0, -1));
-  //      }
-  //      return;
-  //    }
-  //
-  //    if (event.key === " ") {
-  //      const isCorrect = currentWord === words[currentWordIndex];
-  //      if (isCorrect) {
-  //        setCurrentWordIndex((old) => old + 1);
-  //        setCurrentWord("");
-  //      }
-  //      return;
-  //    }
-  //
-  //    if (ALPHABET.includes(event.key)) {
-  //      setCurrentWord((old) => old + event.key);
-  //    }
-  //  };
-  //
-  //  window.addEventListener("keydown", handleTyping);
-  //
-  //  return () => window.removeEventListener("keydown", handleTyping);
-  //}, [currentWord]);
-  //
-
+const Words = ({ words, currentWordIndex, typedWord, advCursorIndex }) => {
   const wordsToDisplay = [];
 
   for (let i = 0; i < words.length; i++) {
@@ -136,6 +91,11 @@ const Words = ({ words, currentWordIndex, typedWord }) => {
     }
     wordsToDisplay.push(
       <div key={i.toString()} className="word flex items-center">
+        {i === advCursorIndex ? (
+          <div key="curs-adv" className="curs adv"></div>
+        ) : (
+          ""
+        )}
         {word.split("").map((letter, j) => (
           <span className="letter" key={i.toString() + "-" + j.toString()}>
             {letter}

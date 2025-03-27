@@ -18,6 +18,10 @@
   height: 20px;
 }
 
+.curs.adv {
+  background-color: blue;
+}
+
 button {
   background-color: black;
   padding: 5px;

@@ -6,6 +6,7 @@ import { socket } from "./socket";
 const JoinMatch = () => {
   const [join, setJoin] = useState(false);
   const [status, setStatus] = useState("HOME");
+  const [matchId, setMatchId] = useState("");
 
   useEffect(() => {
     if (!join) return;
@@ -18,21 +19,21 @@ const JoinMatch = () => {
       setStatus("WAITING");
     });
 
-    socket.on("hello", (msg) => {
-      console.log(msg, "in room");
+    socket.on("match", (matchId) => {
       setStatus("MATCH");
+      setMatchId(matchId);
     });
   }, [join]);
 
   const handleClick = () => {
     if (!join) {
       setJoin(true);
-      socket.emit("joinMatch", "join");
+      socket.emit("joinPool", "join");
     }
   };
 
   if (status === "MATCH") {
-    return <Match />;
+    return <Match matchId={matchId} />;
   }
 
   return (

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import Words from "./Words";
+import { socket } from "./socket.js";
 
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
-const Match = () => {
+const Match = ({ matchId }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [advCursorIndex, setAdvCursorIndex] = useState(0);
   const [typedWord, setTypedWord] = useState("");
   const [words, setWords] = useState([]);
 
@@ -16,6 +18,12 @@ const Match = () => {
     };
 
     getWords();
+  }, []);
+
+  useEffect(() => {
+    socket.on("advCursorIndex", (ind) => {
+      setAdvCursorIndex(ind);
+    });
   }, []);
 
   useEffect(() => {
@@ -32,6 +40,7 @@ const Match = () => {
         if (isCorrect) {
           setCurrentWordIndex((old) => old + 1);
           setTypedWord("");
+          socket.emit("cursorIndex", matchId, currentWordIndex + 1);
         }
         return;
       }
@@ -51,6 +60,7 @@ const Match = () => {
       words={words}
       currentWordIndex={currentWordIndex}
       typedWord={typedWord}
+      advCursorIndex={advCursorIndex}
     />
   );
 };
