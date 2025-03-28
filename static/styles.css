@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 .letter {
+  font-size: 20px;
   color: grey;
 }
 
@@ -14,7 +15,7 @@
 
 .curs {
   background-color: red;
-  width: 1px;
+  width: 2px;
   height: 20px;
 }
 
