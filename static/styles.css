@@ -14,12 +14,12 @@
 
 .curs {
   background-color: red;
-  width: 2px;
+  width: 1px;
   height: 20px;
 }
 
 .curs.adv {
-  background-color: blue;
+  background-color: grey;
 }
 
 button {
