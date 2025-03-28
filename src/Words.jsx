@@ -21,12 +21,12 @@ const Words = ({ words, currentWordIndex, typedWord, advCursorIndex }) => {
     if (i === currentWordIndex) {
       const letters = [];
       let j = 0;
-      let jj = 0;
+      //let jj = 0;
       let cursorPlaced = false;
       if (typedWord !== "") {
         let wrong = false;
         while (j < typedWord.length) {
-          const letter = typedWord[j];
+          const letter = j < word.length ? word[j] : typedWord[j];
           if (wrong) {
             letters.push(
               <span
@@ -56,7 +56,6 @@ const Words = ({ words, currentWordIndex, typedWord, advCursorIndex }) => {
                   {letter}
                 </span>,
               );
-              jj++;
             }
           }
           j++;
@@ -66,21 +65,18 @@ const Words = ({ words, currentWordIndex, typedWord, advCursorIndex }) => {
           }
         }
       }
-      while (jj < word.length) {
+      while (j < word.length) {
         if (typedWord === "" && !cursorPlaced) {
           letters.push(<div key="curs" className="curs"></div>);
           cursorPlaced = true;
         }
-        const letter = word[jj];
+        const letter = word[j];
         letters.push(
-          <span
-            className="letter"
-            key={i.toString() + "-" + (j + jj).toString()}
-          >
+          <span className="letter" key={i.toString() + "-" + j.toString()}>
             {letter}
           </span>,
         );
-        jj++;
+        j++;
       }
       wordsToDisplay.push(
         <div key={i.toString()} className="word flex items-center">
