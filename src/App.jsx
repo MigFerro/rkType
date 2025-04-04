@@ -1,5 +1,3 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
 import JoinMatch from "./JoinMatch";
 
 const App = () => {
@@ -11,6 +9,4 @@ const App = () => {
   );
 };
 
-const container = document.getElementById("root");
-const root = createRoot(container);
-root.render(React.createElement(App));
+export default App;

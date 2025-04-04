@@ -1,111 +1,83 @@
-const Words = ({ words, currentWordIndex, typedWord, advCursorIndex }) => {
+import { useEffect, useRef, useState } from "react";
+
+const Words = ({ words, currentWordIndex, typedWord }) => {
   const wordsToDisplay = [];
+  const letterRefs = useRef({});
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+
+  // Set cursor position after render
+  useEffect(() => {
+    const letterKey = currentWordIndex - typedWord.length;
+    const targetRef = letterRefs.current[letterKey];
+    if (targetRef && targetRef.getBoundingClientRect) {
+      const rect = targetRef.getBoundingClientRect();
+      setCursorPos({
+        x: rect.left + window.scrollX,
+        y: rect.top + window.scrollY,
+        height: rect.height,
+      });
+    }
+  }, [typedWord, currentWordIndex]);
 
   for (let i = 0; i < words.length; i++) {
     const word = words[i];
-    if (i < currentWordIndex) {
-      wordsToDisplay.push(
-        <div key={i.toString()} className="word">
-          {word.split("").map((letter, j) => (
-            <span
-              className="letter right"
-              key={i.toString() + "-" + j.toString()}
-            >
-              {letter}
-            </span>
-          ))}
-        </div>,
-      );
-      continue;
-    }
-    if (i === currentWordIndex) {
-      const letters = [];
-      let j = 0;
-      //let jj = 0;
-      let cursorPlaced = false;
-      if (typedWord !== "") {
-        let wrong = false;
-        while (j < typedWord.length) {
-          const letter = j < word.length ? word[j] : typedWord[j];
-          if (wrong) {
-            letters.push(
-              <span
-                className="letter wrong"
-                key={i.toString() + "-" + j.toString()}
-              >
-                {letter}
-              </span>,
-            );
-          } else {
-            if (typedWord[j] !== word[j]) {
-              wrong = true;
-              letters.push(
-                <span
-                  className="letter wrong"
-                  key={i.toString() + "-" + j.toString()}
-                >
-                  {letter}
-                </span>,
-              );
-            } else {
-              letters.push(
-                <span
-                  className="letter right"
-                  key={i.toString() + "-" + j.toString()}
-                >
-                  {letter}
-                </span>,
-              );
+    const letters = [];
+
+    for (let j = 0; j < word.length; j++) {
+      const letterKey = i - j;
+      const isTyped =
+        i < currentWordIndex ||
+        (i === currentWordIndex && j < typedWord.length);
+      const isCorrect =
+        i < currentWordIndex ||
+        (i === currentWordIndex && typedWord[j] === word[j]);
+
+      const className =
+        isTyped && isCorrect
+          ? "letter right"
+          : isTyped && !isCorrect
+            ? "letter wrong"
+            : "letter";
+
+      letters.push(
+        <span
+          className={className}
+          key={letterKey}
+          ref={(el) => {
+            if (i === currentWordIndex) {
+              letterRefs.current[letterKey] = el;
             }
-          }
-          j++;
-          if (j === typedWord.length) {
-            letters.push(<div key="curs" className="curs"></div>);
-            cursorPlaced = true;
-          }
-        }
-      }
-      while (j < word.length) {
-        if (typedWord === "" && !cursorPlaced) {
-          letters.push(<div key="curs" className="curs"></div>);
-          cursorPlaced = true;
-        }
-        const letter = word[j];
-        letters.push(
-          <span className="letter" key={i.toString() + "-" + j.toString()}>
-            {letter}
-          </span>,
-        );
-        j++;
-      }
-      wordsToDisplay.push(
-        <div key={i.toString()} className="word flex items-center">
-          {letters}
-        </div>,
+          }}
+        >
+          {word[j]}
+        </span>,
       );
-      continue;
     }
+
     wordsToDisplay.push(
       <div key={i.toString()} className="word flex items-center">
-        {i === advCursorIndex ? (
-          <div key="curs-adv" className="curs adv"></div>
-        ) : (
-          ""
-        )}
-        {word.split("").map((letter, j) => (
-          <span className="letter" key={i.toString() + "-" + j.toString()}>
-            {letter}
-          </span>
-        ))}
+        {letters}
       </div>,
     );
   }
 
   return (
-    <div className="flex justify-center px-[10%]">
-      <div className="wordsContainer flex flex-wrap justify-items-start space-x-4">
-        {wordsToDisplay}
+    <div className="relative">
+      <div className="flex justify-center px-[10%]">
+        <div className="wordsContainer flex flex-wrap justify-items-start space-x-4">
+          {wordsToDisplay}
+        </div>
       </div>
+
+      {/* Floating cursor */}
+      <div
+        className="curs absolute transition-all duration-75"
+        style={{
+          left: `${cursorPos.x}px`,
+          top: `${cursorPos.y}px`,
+          height: `${cursorPos.height || 24}px`,
+        }}
+      ></div>
     </div>
   );
 };
