@@ -16,8 +16,7 @@
 .curs {
   background-color: red;
   width: 2px;
-  height: 20px;
-  position: absolute;
+  height: 24px;
 }
 
 .curs.adv {

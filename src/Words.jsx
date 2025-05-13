@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 const Words = ({ words, currentWordIndex, typedWord }) => {
   const wordsToDisplay = [];
   const letterRefs = useRef({});
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0, adv: false });
 
   // Set cursor position after render
   useEffect(() => {
@@ -11,10 +11,17 @@ const Words = ({ words, currentWordIndex, typedWord }) => {
     const targetRef = letterRefs.current[letterKey];
     if (targetRef && targetRef.getBoundingClientRect) {
       const rect = targetRef.getBoundingClientRect();
+
       setCursorPos({
-        x: rect.left + window.scrollX,
+        x: rect.left + window.scrollX - 2,
         y: rect.top + window.scrollY,
-        height: rect.height,
+        adv: true,
+      });
+    } else if (cursorPos.adv) {
+      setCursorPos({
+        x: cursorPos.x + 12,
+        y: cursorPos.y,
+        adv: false,
       });
     }
   }, [typedWord, currentWordIndex]);
@@ -62,20 +69,18 @@ const Words = ({ words, currentWordIndex, typedWord }) => {
   }
 
   return (
-    <div className="relative">
+    <div className="">
       <div className="flex justify-center px-[10%]">
         <div className="wordsContainer flex flex-wrap justify-items-start space-x-4">
           {wordsToDisplay}
         </div>
       </div>
 
-      {/* Floating cursor */}
       <div
         className="curs absolute transition-all duration-75"
         style={{
           left: `${cursorPos.x}px`,
           top: `${cursorPos.y}px`,
-          height: `${cursorPos.height || 24}px`,
         }}
       ></div>
     </div>
