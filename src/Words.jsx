@@ -32,16 +32,21 @@ const Words = ({ words, currentWordIndex, typedWord }) => {
 
   for (let i = 0; i < words.length; i++) {
     const word = words[i];
+    let dispWord = words[i];
+    if (i === currentWordIndex && typedWord.length > word.length) {
+      dispWord = typedWord;
+    }
     const letters = [];
 
-    for (let j = 0; j < word.length; j++) {
+    for (let j = 0; j < dispWord.length; j++) {
       const letterKey = i - j;
       const isTyped =
         i < currentWordIndex ||
         (i === currentWordIndex && j < typedWord.length);
-      const isCorrect =
-        i < currentWordIndex ||
-        (i === currentWordIndex && typedWord[j] === word[j]);
+      let isCorrect = true;
+      if (i === currentWordIndex && j < word.length && typedWord[j] !== word[j])
+        isCorrect = false;
+      if (i === currentWordIndex && j >= word.length) isCorrect = false;
 
       const className =
         isTyped && isCorrect
@@ -60,7 +65,7 @@ const Words = ({ words, currentWordIndex, typedWord }) => {
             }
           }}
         >
-          {word[j]}
+          {dispWord[j]}
         </span>,
       );
     }
@@ -85,6 +90,7 @@ const Words = ({ words, currentWordIndex, typedWord }) => {
         style={{
           left: `${cursorPos.x}px`,
           top: `${cursorPos.y}px`,
+          opacity: `${!cursorPos.x && !cursorPos.y ? 0 : 1}`,
         }}
       ></div>
     </div>
