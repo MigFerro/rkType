@@ -3,26 +3,30 @@ import { useEffect, useRef, useState } from "react";
 const Words = ({ words, currentWordIndex, typedWord }) => {
   const wordsToDisplay = [];
   const letterRefs = useRef({});
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0, adv: false });
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
   // Set cursor position after render
   useEffect(() => {
-    const letterKey = currentWordIndex - typedWord.length;
+    const letterKey =
+      typedWord.length === 0
+        ? currentWordIndex
+        : currentWordIndex - typedWord.length + 1;
     const targetRef = letterRefs.current[letterKey];
     if (targetRef && targetRef.getBoundingClientRect) {
+      console.log("yes", targetRef, letterRefs.current);
       const rect = targetRef.getBoundingClientRect();
 
-      setCursorPos({
-        x: rect.left + window.scrollX - 2,
-        y: rect.top + window.scrollY,
-        adv: true,
-      });
-    } else if (cursorPos.adv) {
-      setCursorPos({
-        x: cursorPos.x + 12,
-        y: cursorPos.y,
-        adv: false,
-      });
+      if (typedWord.length === 0) {
+        setCursorPos({
+          x: rect.left + window.scrollX - 1,
+          y: rect.top + window.scrollY + 2,
+        });
+      } else {
+        setCursorPos({
+          x: rect.right + window.scrollX,
+          y: rect.top + window.scrollY + 2,
+        });
+      }
     }
   }, [typedWord, currentWordIndex]);
 
