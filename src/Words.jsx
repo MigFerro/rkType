@@ -34,7 +34,7 @@ const Words = ({ words, currentWordIndex, typedWord }) => {
     const word = words[i];
     let dispWord = words[i];
     if (i === currentWordIndex && typedWord.length > word.length) {
-      dispWord = typedWord;
+      dispWord += typedWord.slice(word.length);
     }
     const letters = [];
 
