@@ -7,7 +7,7 @@ const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
 const Match = ({ matchId }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [advCursorIndex, setAdvCursorIndex] = useState(0);
+  //const [advCursorIndex, setAdvCursorIndex] = useState(0);
   const [typedWord, setTypedWord] = useState("");
   const [words, setWords] = useState([]);
   const [status, setStatus] = useState("MATCH");
@@ -23,10 +23,10 @@ const Match = ({ matchId }) => {
   }, []);
 
   useEffect(() => {
-    socket.on("advCursorIndex", (ind) => {
-      setAdvCursorIndex(ind);
-      return;
-    });
+    //socket.on("advCursorIndex", (ind) => {
+    //  setAdvCursorIndex(ind);
+    //  return;
+    //});
 
     socket.on("winner", (id) => {
       console.log("game is finished");
@@ -78,7 +78,7 @@ const Match = ({ matchId }) => {
         words={words}
         currentWordIndex={currentWordIndex}
         typedWord={typedWord}
-        advCursorIndex={advCursorIndex}
+        //advCursorIndex={advCursorIndex}
       />
     );
   }

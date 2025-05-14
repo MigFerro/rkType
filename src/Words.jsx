@@ -13,7 +13,6 @@ const Words = ({ words, currentWordIndex, typedWord }) => {
         : currentWordIndex - typedWord.length + 1;
     const targetRef = letterRefs.current[letterKey];
     if (targetRef && targetRef.getBoundingClientRect) {
-      console.log("yes", targetRef, letterRefs.current);
       const rect = targetRef.getBoundingClientRect();
 
       if (typedWord.length === 0) {
