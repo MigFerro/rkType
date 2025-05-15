@@ -28,6 +28,7 @@ button {
   padding: 5px;
   color: white;
   border-radius: 5px;
+  width: fit-content;
 }
 button.disabled {
   background-color: grey;

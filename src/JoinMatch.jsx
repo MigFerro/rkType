@@ -37,15 +37,13 @@ const JoinMatch = () => {
   }
 
   return (
-    <div className="w-full flex justify-center items-center mt-20">
-      <div className="flex flex-col justify-center">
-        <div className="my-10">
-          {status === "WAITING" ? "Waiting for another player..." : ""}
-        </div>
-        <button className={join ? "disabled" : ""} onClick={handleClick}>
-          Join Match
-        </button>
+    <div className="w-full flex flex-col justify-center items-center mt-5">
+      <div className="my-10">
+        {status === "WAITING" ? "Searching for an opponent..." : ""}
       </div>
+      <button className={join && "disabled"} onClick={handleClick}>
+        Join Match
+      </button>
     </div>
   );
 };
