@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import Match from "./Match";
 import { socket } from "./socket";
+import { Navigate } from "react-router";
 
 const JoinMatch = () => {
   const [join, setJoin] = useState(false);
@@ -33,7 +34,8 @@ const JoinMatch = () => {
   };
 
   if (status === "MATCH") {
-    return <Match matchId={matchId} />;
+    //return <Match matchId={matchId} />;
+    return <Navigate to={"/match/" + matchId} />;
   }
 
   return (

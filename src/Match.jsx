@@ -6,6 +6,8 @@ import { socket } from "./socket.js";
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
 const Match = ({ matchId }) => {
+  //console.log("matchId: ", matchId);
+
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   //const [advCursorIndex, setAdvCursorIndex] = useState(0);
   const [typedWord, setTypedWord] = useState("");
