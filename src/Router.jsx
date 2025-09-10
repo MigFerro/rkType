@@ -11,6 +11,9 @@ ReactDOM.createRoot(root).render(
     <Routes>
       <Route index element={<App />} />
       <Route path="practice" element={<Match />} />
+      <Route path="match">
+        <Route path=":matchId" element={<Match />} />
+      </Route>
     </Routes>
   </BrowserRouter>,
 );
