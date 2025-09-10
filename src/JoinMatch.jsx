@@ -12,15 +12,15 @@ const JoinMatch = () => {
   useEffect(() => {
     if (!join) return;
 
-    socket.on("connect", () => {
+    socket.on("connection", () => {
       console.log("Connected to server");
     });
 
-    socket.on("inPool", () => {
+    socket.on("waitingForMatch", () => {
       setStatus("WAITING");
     });
 
-    socket.on("match", (matchId) => {
+    socket.on("matchCreated", (matchId) => {
       setStatus("MATCH");
       setMatchId(matchId);
     });
@@ -29,7 +29,7 @@ const JoinMatch = () => {
   const handleClick = () => {
     if (!join) {
       setJoin(true);
-      socket.emit("joinPool", "join");
+      socket.emit("lookingForMatch", "join");
     }
   };
 
